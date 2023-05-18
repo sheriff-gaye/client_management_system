@@ -30,13 +30,8 @@
             <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                 @forelse ( $projects as $project )
                 <tr class="text-gray-700 dark:text-gray-400">
-                    <td class="px-4 py-3">
-                        <div class="flex items-center text-sm">
-
-                            <div>
-                                <p class="font-semibold">{{ucfirst($project->title)}}</p>
-                            </div>
-                        </div>
+                    <td class="px-4 py-3 text-sm">
+                        {{ucfirst($project->title)}}
                     </td>
                     <td class="px-4 py-3 text-sm">
                         {{ucfirst($project->user->name)}}
@@ -54,18 +49,23 @@
                             {{ucfirst($project->status)}}
                         </span>
                         @elseif($project->status=='open')
-                        <span class="px-2 py-1 font-semibold leading-tight text-orange-700  bg-orange-100	 rounded-full dark:text-white dark:bg-blue-00">
-                        {{ucfirst($project->status)}}
+                        <span class="px-2 py-1 font-semibold leading-tight text-purple-600 bg-purple-100 rounded-full dark:text-white dark:bg-blue-00">
+                            {{ucfirst($project->status)}}
+                        </span>
                         @elseif($project->status=='in progress')
-                        <span class="px-2 py-1 font-semibold leading-tight text-blue-700 bg-blue-100 rounded-full dark:text-white dark:bg-blue-00">
-                        {{ucfirst($project->status)}}
-                        </span>
-                        @elseif($project->status=='blocked')
-                        <span class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-700">
-                        {{ucfirst($project->status)}}
-                        </span>
+                            <span class="px-2 py-1 font-semibold leading-tight  text-yellow-700 rounded-full dark:text-blue-100 dark:bg-blue-700">
+                                {{ucfirst($project->status)}}
+                            </span>
+                            @elseif($project->status=='cancelled')
+                            <span class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-orange-100 dark:bg-orange-700">
+                                {{ucfirst($project->status)}}
+                            </span>
+                            @elseif($project->status=='blocked')
+                            <span class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-700">
+                                {{ucfirst($project->status)}}
+                            </span>
 
-                        @endif
+                            @endif
                     </td>
                     <td class="px-4 py-3">
                         <div class="flex items-center space-x-4 text-sm">
@@ -117,7 +117,6 @@
                         </footer>
                     </div>
                 </div>
-
                 @empty
 
                 <tr class='text-gray-700 dark:text-gray-400 '>

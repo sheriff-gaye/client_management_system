@@ -15,8 +15,8 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects=Project::with(['user', 'clients'])->get();
-        return view('admin.projects.index',compact('projects'));
+        $projects = Project::with(['user', 'clients'])->latest()->get();
+        return view('admin.projects.index', compact('projects'));
     }
 
     /**
@@ -24,9 +24,9 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        $clients=Client::all()->pluck('company_name','id');
-        $users=User::all()->pluck('name','id');
-        return view('admin.projects.create',compact('clients','users'));
+        $clients = Client::all()->pluck('company_name', 'id');
+        $users = User::all()->pluck('name', 'id');
+        return view('admin.projects.create', compact('clients', 'users'));
     }
 
     /**
@@ -42,7 +42,7 @@ class ProjectController extends Controller
             'user_id' => 'required',
             'status' => 'required'
         ]);
-// dd($request->all());
+        // dd($request->all());
         Project::create($request->all());
 
         return redirect()->route('project.index');
@@ -61,8 +61,10 @@ class ProjectController extends Controller
      */
     public function edit(string $id)
     {
-        $project=Project::find($id);
-        return view('admin.projects.edit',compact('client'));
+        $project = Project::find($id);
+        $clients = Client::all()->pluck('company_name', 'id');
+        $users = User::all()->pluck('name', 'id');
+        return view('admin.projects.edit', compact('project', 'clients', 'users'));
     }
 
     /**
@@ -70,7 +72,18 @@ class ProjectController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $this->validate($request, [
+            'title' => 'required',
+            'description' => 'required',
+            'deadline' => 'required',
+            'client_id' => 'required',
+            'user_id' => 'required',
+            'status' => 'required'
+        ]);
+
+        $project = Project::find($id);
+        $project->update($request->all());
+        return redirect()->route('project.index');
     }
 
     /**
@@ -78,6 +91,9 @@ class ProjectController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $project = Project::find($id);
+        $project->delete();
+        return redirect()->route('project.index');
+
     }
 }

@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\LogoutController;
 use App\Http\Controllers\Admin\PositionController;
 use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\RegisteredvotersController;
+use App\Http\Controllers\Admin\TaskController;
 use App\Http\Controllers\Voting\VotingDashboardController;
 use App\Http\Controllers\Voting\VotingLoginController;
 
@@ -29,20 +30,10 @@ Route::get('/', function () {
 });
 
 
-
-
 Route::get('/logout', [LogoutController::class, 'logout'])->name('go_out');
-
-
-
 
 Route::get('/dash', [DasboardController::class, 'index'])->name('home');
 
-Route::resource('/candidate', CandidateController::class);
-
-Route::resource('/voters', RegisteredvotersController::class);
-
-Route::resource('/position',PositionController::class);
 
 Route::resource('/adminusers', AdminUsers::class);
 
@@ -50,12 +41,7 @@ Route::resource('client',ClientController::class);
 
 Route::resource('/project',ProjectController::class);
 
-
-Route::resource('/voting',VotingLoginController::class);
-
-
-Route::prefix('admin')->group(function () {
-});
+Route::resource('/task',TaskController::class);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
