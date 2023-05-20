@@ -14,7 +14,20 @@
         <span class="ml-2" aria-hidden="true">+</span>
     </a>
 </div>
+@if (session('danger'))
+<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert" x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 3000)" >
+    <span class="block sm:inline text-center"> {{ session('danger') }}</span>
+</div>
 
+@endif
+
+@if(session('success'))
+<div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert" x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 3000)">
+    <span class="block sm:inline text-center"> {{ session('success') }}</span>
+</div>
+
+@endif
+<br><br>
 <div class="w-full overflow-hidden rounded-lg shadow-xs">
     <div class="w-full overflow-x-auto">
         <table class="w-full whitespace-no-wrap">
@@ -142,9 +155,7 @@
         </span>
     </div>
 
-
-
-
+    <script defer src="https://unpkg.com/alpinejs@3.2.4/dist/cdn.min.js"></script>
 
 </div>
 

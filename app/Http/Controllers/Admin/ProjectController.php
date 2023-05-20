@@ -15,7 +15,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::with(['user', 'clients'])->get();
+        $projects = Project::with(['user', 'clients'])->latest()->get();
         return view('admin.projects.index', compact('projects'));
     }
 
@@ -24,9 +24,9 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        $clients = Client::all()->pluck('company_name', 'id');
+        $clients = Client::where('status',0)->pluck('company_name', 'id');
         $users = User::all()->pluck('name', 'id');
-        return view('admin.projects.create', compact('clients', 'users'))->with('success','Project Created Successfully');
+        return view('admin.projects.create', compact('clients', 'users'));
     }
 
     /**
@@ -45,7 +45,7 @@ class ProjectController extends Controller
         // dd($request->all());
         Project::create($request->all());
 
-        return redirect()->route('project.index');
+        return redirect()->route('project.index')->with('success','Project Created Successfully');
     }
 
     /**
@@ -62,7 +62,7 @@ class ProjectController extends Controller
     public function edit(string $id)
     {
         $project = Project::find($id);
-        $clients = Client::all()->pluck('company_name', 'id');
+        $clients = Client::where('status',0)->pluck('company_name', 'id');
         $users = User::all()->pluck('name', 'id');
         return view('admin.projects.edit', compact('project', 'clients', 'users'));
     }

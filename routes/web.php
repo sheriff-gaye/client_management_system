@@ -34,9 +34,6 @@ Route::get('/logout', [LogoutController::class, 'logout'])->name('go_out');
 
 Route::get('/dash', [DasboardController::class, 'index'])->name('home');
 
-
-Route::resource('/adminusers', AdminUsers::class);
-
 Route::resource('client',ClientController::class);
 
 Route::resource('/project',ProjectController::class);

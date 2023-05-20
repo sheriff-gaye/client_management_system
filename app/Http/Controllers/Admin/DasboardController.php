@@ -16,7 +16,7 @@ class DasboardController extends Controller
     public function index() {
         $clients=Client::all()->count();
         $tasks=Task::all()->count();
-        $users=User::all()->count();
+        $users=User::all();
         $projects=Project::all()->count();
         return view('admin.index',compact('clients','users','projects','tasks'));
     }

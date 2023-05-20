@@ -25,7 +25,7 @@ class TaskController extends Controller
      */
     public function create()
     {
-        $clients = Client::all()->pluck('company_name', 'id');
+        $clients = Client::where('status',0)->pluck('company_name', 'id');
         $projects=Project::all()->pluck('title','id');
         $users = User::all()->pluck('name', 'id');
         return view('admin.task.create',compact('users','clients','projects'));
@@ -48,7 +48,7 @@ class TaskController extends Controller
 
         Task::create($request->all());
 
-        return redirect()->route('task.index');
+        return redirect()->route('task.index')->with('success','Task Created Successfully');
     }
 
     /**
@@ -64,7 +64,7 @@ class TaskController extends Controller
      */
     public function edit(string $id)
     {
-        $clients = Client::all()->pluck('company_name', 'id');
+        $clients = Client::where('status',0)->pluck('company_name', 'id');
         $projects=Project::all()->pluck('title','id');
         $users = User::all()->pluck('name', 'id');
         $task=Task::find($id);
@@ -91,7 +91,7 @@ class TaskController extends Controller
         $task=Task::find($id);
         $task->update($request->all());
 
-        return redirect()->route('task.index');
+        return redirect()->route('task.index')->with('success','Task Updated Successfully');
         
        
     }
@@ -104,7 +104,7 @@ class TaskController extends Controller
         $task=Task::find($id);
         $task->delete();
 
-        return redirect()->route('task.index');
+        return redirect()->route('task.index')->with('danger','Task Deleted Successfully');
         
     }
 }

@@ -6,14 +6,28 @@
 
 
 <div class="px-3  my-8 flex justify-between">
-<h2 class="text-2xl font-semibold text-gray-700 dark:text-gray-200 uppercase">
-    Clients
-</h2>
+    <h2 class="text-2xl font-semibold text-gray-700 dark:text-gray-200 uppercase">
+        Clients
+    </h2>
     <a href="{{route('client.create')}}" class="w-fit  px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
         Add Client
         <span class="ml-2" aria-hidden="true">+</span>
     </a>
 </div>
+@if (session('danger'))
+<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert" x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 3000)">
+    <span class="block sm:inline text-center"> {{ session('danger') }}</span>
+</div>
+
+@endif
+<br><br>
+@if(session('success'))
+<div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert" x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 3000)">
+    <span class="block sm:inline text-center"> {{ session('success') }}</span>
+</div>
+
+@endif
+<br><br>
 
 <div class="w-full overflow-hidden rounded-lg shadow-xs">
     <div class="w-full overflow-x-auto">
@@ -31,13 +45,8 @@
             <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                 @forelse ( $clients as $client )
                 <tr class="text-gray-700 dark:text-gray-400">
-                    <td class="px-4 py-3">
-                        <div class="flex items-center text-sm">
-
-                            <div>
-                                <p class="font-semibold">{{$client->company_name}}</p>
-                            </div>
-                        </div>
+                    <td class="px-4 py-3 text-sm">
+                        {{$client->company_name}}
                     </td>
                     <td class="px-4 py-3 text-sm">
                         {{$client->email}}
@@ -137,6 +146,7 @@
 
 
 
+    <script defer src="https://unpkg.com/alpinejs@3.2.4/dist/cdn.min.js"></script>
 
 </div>
 
