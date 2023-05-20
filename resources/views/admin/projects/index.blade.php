@@ -3,18 +3,33 @@
 
 @section('admin_layout')
 
-<h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200 uppercase">
-    Projects
-</h2>
 
-<div class="px-3  my-6 flex justify-end">
-    <a href="{{route('project.create')}}" class="w-fit justify-around px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+<div class="px-3  my-8 flex justify-between">
+    <h2 class="text-2xl font-semibold text-gray-700 dark:text-gray-200 uppercase">
+        Projects
+    </h2>
+    <a href="{{route('project.create')}}" class="w-fit  px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
         Add Project
         <span class="ml-2" aria-hidden="true">+</span>
     </a>
 </div>
 
-<div class="w-full overflow-hidden rounded-lg shadow-xs">
+@if (session('danger'))
+<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+    <span class="block sm:inline text-center"> {{ session('danger') }}</span>
+</div>
+
+@endif
+
+@if(session('success'))
+<div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+    <span class="block sm:inline text-center"> {{ session('success') }}</span>
+</div>
+
+@endif
+
+<br><br>
+<div class="w-full  overflow-hidden rounded-lg shadow-xs">
     <div class="w-full overflow-x-auto">
         <table class="w-full whitespace-no-wrap">
             <thead>
@@ -45,27 +60,28 @@
                     <td class="px-4 py-3 text-xs">
                         @if($project->status=='completed')
 
-                        <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
+                        <span class="px-2 py-1 font-semibold leading-tight  rounded-full " style="background: rgb(22 163 74);color:white">
                             {{ucfirst($project->status)}}
                         </span>
                         @elseif($project->status=='open')
-                        <span class="px-2 py-1 font-semibold leading-tight text-purple-600 bg-purple-100 rounded-full dark:text-white dark:bg-blue-00">
+                        <span class="px-2 py-1 font-semibold leading-tight  rounded-full " style="background: rgb(245 158 11); color:white">
                             {{ucfirst($project->status)}}
                         </span>
                         @elseif($project->status=='in progress')
-                            <span class="px-2 py-1 font-semibold leading-tight  text-yellow-700 rounded-full dark:text-blue-100 dark:bg-blue-700">
-                                {{ucfirst($project->status)}}
-                            </span>
-                            @elseif($project->status=='cancelled')
-                            <span class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-orange-100 dark:bg-orange-700">
-                                {{ucfirst($project->status)}}
-                            </span>
-                            @elseif($project->status=='blocked')
-                            <span class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-700">
-                                {{ucfirst($project->status)}}
-                            </span>
+                        <span class="px-2 py-1 font-semibold leading-tight rounded-full " style="background:  rgb(22 78 99);color:white;">
+                            {{ucfirst($project->status)}}
+                        </span>
+                        @elseif($project->status=='cancelled')
+                        <span class="px-2 py-1 font-semibold leading-tight rounded-full " style="background: rgb(14 165 233);color:white;">
+                            {{ucfirst($project->status)}}
+                        </span>
+                        @elseif($project->status=='blocked')
+                        <span class="px-2 py-1 font-semibold leading-tight  rounded-full" style="background: rgb(239 68 68);color:white">
 
-                            @endif
+                            {{ucfirst($project->status)}}
+                        </span>
+
+                        @endif
                     </td>
                     <td class="px-4 py-3">
                         <div class="flex items-center space-x-4 text-sm">
@@ -99,7 +115,7 @@
                         <div class="mt-4 mb-6">
                             <!-- Modal title -->
                             <p class="mb-2 text-lg font-semibold text-gray-700 dark:text-gray-300">
-                                Are you sure you want to Delete this Candidate ?
+                                Are you sure you want to Delete this Project ?
                             </p>
 
                         </div>
@@ -120,7 +136,7 @@
                 @empty
 
                 <tr class='text-gray-700 dark:text-gray-400 '>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center" colspan="4">No Client Information Found</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center" colspan="6">No Project Information Found</td>
                 </tr>
 
                 @endforelse

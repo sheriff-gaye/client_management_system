@@ -3,12 +3,13 @@
 
 @section('admin_layout')
 
-<h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200 uppercase">
+
+
+<div class="px-3  my-8 flex justify-between">
+<h2 class="text-2xl font-semibold text-gray-700 dark:text-gray-200 uppercase">
     Task
 </h2>
-
-<div class="px-3  my-6 flex justify-end">
-    <a href="{{route('task.create')}}" class="w-fit justify-around px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+    <a href="{{route('task.create')}}" class="w-fit  px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
         Add Task
         <span class="ml-2" aria-hidden="true">+</span>
     </a>
@@ -49,19 +50,19 @@
                             {{ucfirst($task->status)}}
                         </span>
                         @elseif($task->status=='open')
-                        <span class="px-2 py-1 font-semibold leading-tight text-purple-600 bg-purple-100 rounded-full dark:text-white dark:bg-blue-00">
+                        <span class="px-2 py-1 font-semibold leading-tight rounded-full" style="background: rgb(245 158 11); color:white">
                             {{ucfirst($task->status)}}
                         </span>
                         @elseif($task->status=='in progress')
                         <span class="px-2 py-1 font-semibold leading-tight  text-yellow-700 rounded-full dark:text-blue-100 dark:bg-blue-700">
                             {{ucfirst($task->status)}}
                         </span>
-                        @elseif($task->status=='cancelled')
+                        @elseif($task->status=='pending')
                         <span class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-orange-100 dark:bg-orange-700">
                             {{ucfirst($task->status)}}
                         </span>
                         @elseif($task->status=='blocked')
-                        <span class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-700">
+                        <span class="px-2 py-1 font-semibold leading-tight  rounded-full " style="background: rgb(239 68 68);color:white">
                             {{ucfirst($task->status)}}
                         </span>
 
@@ -120,7 +121,7 @@
                 @empty
 
                 <tr class='text-gray-700 dark:text-gray-400 '>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center" colspan="4">No Client Information Found</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center" colspan="6">No Task Information Found</td>
                 </tr>
 
                 @endforelse
