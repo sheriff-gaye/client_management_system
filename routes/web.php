@@ -40,6 +40,8 @@ Route::resource('/project',ProjectController::class);
 
 Route::resource('/task',TaskController::class);
 
+Route::resource('/edit_profile',ProfileController::class);
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
