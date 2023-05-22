@@ -6,16 +6,16 @@
 
 
 <div class="px-3  my-8 flex justify-between">
-<h2 class="text-2xl font-semibold text-gray-700 dark:text-gray-200 uppercase">
-    Task
-</h2>
+    <h2 class="text-2xl font-semibold text-gray-700 dark:text-gray-200 uppercase">
+        Task
+    </h2>
     <a href="{{route('task.create')}}" class="w-fit  px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
         Add Task
         <span class="ml-2" aria-hidden="true">+</span>
     </a>
 </div>
 @if (session('danger'))
-<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert" x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 3000)" >
+<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert" x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 3000)">
     <span class="block sm:inline text-center"> {{ session('danger') }}</span>
 </div>
 
@@ -34,6 +34,7 @@
             <thead>
                 <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
                     <th class="px-4 py-3">Title</th>
+                    <th class="px-4 py-3">Project</th>
                     <th class="px-4 py-3">Assigned To</th>
                     <th class="px-4 py-3">Client</th>
                     <th class="px-4 py-3">Dateline</th>
@@ -48,6 +49,9 @@
                         {{ucfirst($task->title)}}
                     </td>
                     <td class="px-4 py-3 text-sm">
+                        {{ucfirst($task->project->title)}}
+                    </td>
+                    <td class="px-4 py-3 text-sm">
                         {{ucfirst($task->user->name)}}
                     </td>
                     <td class="px-4 py-3 text-sm">
@@ -57,9 +61,9 @@
                         {{$task->deadline}}
                     </td>
                     <td class="px-4 py-3 text-xs">
-                        @if($task->status=='completed')
+                        @if($task->status=='pending')
 
-                        <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
+                        <span class="px-2 py-1 font-semibold leading-tight  rounded-full  "  style="background:  pink;color:white;">
                             {{ucfirst($task->status)}}
                         </span>
                         @elseif($task->status=='open')
@@ -67,15 +71,19 @@
                             {{ucfirst($task->status)}}
                         </span>
                         @elseif($task->status=='in progress')
-                        <span class="px-2 py-1 font-semibold leading-tight  text-yellow-700 rounded-full dark:text-blue-100 dark:bg-blue-700">
+                        <span class="px-2 py-1 font-semibold leading-tight  rounded-full"  style="background:  rgb(22 78 99);color:white;">
                             {{ucfirst($task->status)}}
                         </span>
-                        @elseif($task->status=='pending')
-                        <span class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-orange-100 dark:bg-orange-700">
+                        @elseif($task->status=='waiting client')
+                        <span class="px-2 py-1 font-semibold leading-tight rounded-full"  style="background:  rgb(14 165 233);color:white;">
                             {{ucfirst($task->status)}}
                         </span>
                         @elseif($task->status=='blocked')
                         <span class="px-2 py-1 font-semibold leading-tight  rounded-full " style="background: rgb(239 68 68);color:white">
+                            {{ucfirst($task->status)}}
+                        </span>
+                        @elseif($task->status=='closed')
+                        <span class="px-2 py-1 font-semibold leading-tight  rounded-full " style="background: green;color:white">
                             {{ucfirst($task->status)}}
                         </span>
 

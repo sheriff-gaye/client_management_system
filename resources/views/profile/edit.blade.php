@@ -23,6 +23,7 @@
                 @include('profile.partials.delete-user-form')
             </div>
         </div>
+        <br><br>
     </div>
 </div>
 

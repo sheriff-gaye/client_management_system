@@ -44,9 +44,9 @@
             </thead>
             <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                 @forelse ( $clients as $client )
-                <tr class="text-gray-700 dark:text-gray-400">
-                    <td class="px-4 py-3 text-sm">
-                        {{$client->company_name}}
+                <tr class="text-gray-700 dark:text-gray-400 ">
+                    <td class="px-4 py-3 text-sm hover:underline">
+                        <a href="{{route('client.show',$client->id)}}" style="color: blue;">{{$client->company_name}}</a>
                     </td>
                     <td class="px-4 py-3 text-sm">
                         {{$client->email}}
@@ -59,11 +59,11 @@
                     </td>
                     <td class="px-4 py-3 text-xs">
                         @if($client->status==0)
-                        <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
+                        <span class="px-2 py-1 font-semibold leading-tight  rounded-full" style="background:  rgb(22 163 74);color:white">
                             Active
                         </span>
                         @else
-                        <span class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-700">
+                        <span class="px-2 py-1 font-semibold leading-tight  rounded-full " style="background: rgb(239 68 68);color:white">
                             In active
                         </span>
                         @endif
