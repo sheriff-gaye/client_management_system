@@ -78,7 +78,11 @@ class ClientController extends Controller
     public function destroy(string $id)
     {
         $client = Client::find($id);
+        if ($client->projects()->exists()) {
+            // Client has associated projects
+            return redirect()->back()->with('danger', 'Cannot delete client with Associated Projects.');
+        }
         $client->delete();
-        return redirect()->route('client.index')->with('task', 'Task Deleted Successfully');
+        return redirect()->route('client.index')->with('success', 'Task Deleted Successfully');
     }
 }

@@ -48,8 +48,8 @@ class ProjectController extends Controller
      */
     public function show(string $id)
     {
-        $project=Project::find($id);
-        return view('admin.projects.show',compact('project'));
+        $project = Project::find($id);
+        return view('admin.projects.show', compact('project'));
     }
 
     /**
@@ -85,11 +85,11 @@ class ProjectController extends Controller
     {
         $project = Project::find($id);
 
-        if ($project->task->exists()) {
-            return redirect()->back()->with('danger', 'Cannot delete Project Task exists.');
+        if ($project->task()->exists()) {
+            return redirect()->back()->with('danger', 'Cannot delete project with associated tasks.');
         }
-
         $project->delete();
+        
 
         return redirect()->back()->with('success', 'Project deleted successfully.');
     }

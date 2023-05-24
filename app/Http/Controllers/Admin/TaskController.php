@@ -54,8 +54,8 @@ class TaskController extends Controller
      */
     public function show(string $id)
     {
-        $task=Task::find($id);
-        return view('admin.task.show',compact('task'));
+        $task = Task::find($id);
+        return view('admin.task.show', compact('task'));
     }
 
     /**
@@ -93,9 +93,9 @@ class TaskController extends Controller
     {
         $task = Task::find($id);
 
-        if ($task->project->id) {
-            return redirect()->back()->with('danger', 'Cannot delete task project exists.');
-        }
+        // if ($task->project->id) {
+        //     return redirect()->back()->with('danger', 'Cannot delete task project exists.');
+        // }
 
         $task->delete();
 
