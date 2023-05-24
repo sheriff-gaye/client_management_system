@@ -7,6 +7,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DasboardController;
 use App\Http\Controllers\Admin\LogoutController;
+use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\PositionController;
 use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\RegisteredvotersController;
@@ -34,13 +35,20 @@ Route::get('/logout', [LogoutController::class, 'logout'])->name('go_out');
 
 Route::get('/dash', [DasboardController::class, 'index'])->name('home');
 
-Route::resource('client',ClientController::class);
+Route::resource('client', ClientController::class);
 
-Route::resource('/project',ProjectController::class);
+Route::resource('/project', ProjectController::class);
 
-Route::resource('/task',TaskController::class);
+Route::resource('/task', TaskController::class);
 
-Route::resource('/edit_profile',ProfileController::class);
+
+Route::group(['prefix' => 'notifications', 'as' => 'notifications.'], function () {
+    Route::put('/{notification}', [NotificationController::class, 'update'])->name('update');
+    Route::delete('/destroy', [NotificationController::class, 'destroy'])->name('destroy');
+});
+
+
+Route::resource('/edit_profile', ProfileController::class);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

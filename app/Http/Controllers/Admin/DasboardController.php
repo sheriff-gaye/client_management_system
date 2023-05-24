@@ -3,13 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Candidate;
 use App\Models\Client;
 use App\Models\Project;
-use App\Models\RegisteredVoters;
 use App\Models\Task;
 use App\Models\User;
-use Illuminate\Http\Request;
+use GuzzleHttp\Psr7\Request;
+use Illuminate\Notifications\DatabaseNotification;
 
 class DasboardController extends Controller
 {
@@ -18,6 +17,11 @@ class DasboardController extends Controller
         $tasks=Task::all()->count();
         $users=User::all();
         $projects=Project::all()->count();
-        return view('admin.index',compact('clients','users','projects','tasks'));
+        $notifications = auth()->user()->unreadNotifications;
+
+
+        return view('admin.index',compact('clients','users','projects','tasks','notifications'));
     }
+
+   
 }

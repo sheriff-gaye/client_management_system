@@ -3,11 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateTaskRequest;
+use App\Http\Requests\EditTaskRequest;
 use App\Models\Client;
 use App\Models\Project;
 use App\Models\Task;
 use App\Models\User;
+use App\Notifications\TaskAssigned;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Symfony\Component\HttpFoundation\Response;
 
 class TaskController extends Controller
 {
@@ -16,8 +21,8 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks=Task::with(['client','project','user'])->latest()->get();
-        return view('admin.task.index',compact('tasks'));
+        $tasks = Task::with(['client', 'project', 'user'])->latest()->get();
+        return view('admin.task.index', compact('tasks'));
     }
 
     /**
@@ -25,30 +30,23 @@ class TaskController extends Controller
      */
     public function create()
     {
-        $clients = Client::where('status',0)->pluck('company_name', 'id');
-        $projects=Project::all()->pluck('title','id');
+        $clients = Client::where('status', 0)->pluck('company_name', 'id');
+        $projects = Project::all()->pluck('title', 'id');
         $users = User::all()->pluck('name', 'id');
-        return view('admin.task.create',compact('users','clients','projects'));
+        return view('admin.task.create', compact('users', 'clients', 'projects'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateTaskRequest $request)
     {
-        $this->validate($request, [
-            'title' => 'required|unique:tasks,title',
-            'description' => 'required',
-            'deadline' => 'required',
-            'client_id' => 'required',
-            'user_id' => 'required',
-            'project_id'=>'required',
-            'status' => 'required'
-        ]);
+        $validatedData = $request->validated();
+        $user = User::find($request->user_id);
+        $task = Task::create($validatedData);
+        $user->notify(new TaskAssigned($task));
 
-        Task::create($request->all());
-
-        return redirect()->route('task.index')->with('success','Task Created Successfully');
+        return redirect()->route('task.index')->with('success', 'Task Created Successfully');
     }
 
     /**
@@ -64,36 +62,27 @@ class TaskController extends Controller
      */
     public function edit(string $id)
     {
-        $clients = Client::where('status',0)->pluck('company_name', 'id');
-        $projects=Project::all()->pluck('title','id');
+        $clients = Client::where('status', 0)->pluck('company_name', 'id');
+        $projects = Project::all()->pluck('title', 'id');
         $users = User::all()->pluck('name', 'id');
-        $task=Task::find($id);
-        return view('admin.task.edit',compact('task','users','projects','clients'));
+        $task = Task::find($id);
+        return view('admin.task.edit', compact('task', 'users', 'projects', 'clients'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(EditTaskRequest $request, string $id)
     {
 
+        $task = Task::find($id);
+        if ($task->user_id !== $request->user_id) {
+            $user = User::find($request->user_id);
+            $user->notify(new TaskAssigned($task));
+        }
+        $task->update($request->validated());
 
-        $this->validate($request, [
-            'title' => 'required',
-            'description' => 'required',
-            'deadline' => 'required',
-            'client_id' => 'required',
-            'user_id' => 'required',
-            'project_id'=>'required',
-            'status' => 'required'
-        ]);
-
-        $task=Task::find($id);
-        $task->update($request->all());
-
-        return redirect()->route('task.index')->with('success','Task Updated Successfully');
-        
-       
+        return redirect()->route('task.index')->with('success', 'Task Updated Successfully');
     }
 
     /**
@@ -101,10 +90,14 @@ class TaskController extends Controller
      */
     public function destroy(string $id)
     {
-        $task=Task::find($id);
+        $task = Task::find($id);
+
+        if ($task->project->id) {
+            return redirect()->back()->with('danger', 'Cannot delete task project exists.');
+        }
+
         $task->delete();
 
-        return redirect()->route('task.index')->with('danger','Task Deleted Successfully');
-        
+        return redirect()->back()->with('success', 'Task deleted successfully.');
     }
 }

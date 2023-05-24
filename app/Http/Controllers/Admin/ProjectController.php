@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Client;
 use App\Models\Project;
 use App\Models\User;
-use Illuminate\Http\Request;
+use App\Notifications\ProjectAssigned;
+use App\Http\Requests\CreateProjectRequest;
+use App\Http\Requests\EditProjectRequest;
 
 class ProjectController extends Controller
 {
@@ -24,7 +26,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        $clients = Client::where('status',0)->pluck('company_name', 'id');
+        $clients = Client::where('status', 0)->pluck('company_name', 'id');
         $users = User::all()->pluck('name', 'id');
         return view('admin.projects.create', compact('clients', 'users'));
     }
@@ -32,20 +34,13 @@ class ProjectController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateProjectRequest $request)
     {
-        $this->validate($request, [
-            'title' => 'required|unique:projects,title',
-            'description' => 'required',
-            'deadline' => 'required',
-            'client_id' => 'required',
-            'user_id' => 'required',
-            'status' => 'required'
-        ]);
-        // dd($request->all());
-        Project::create($request->all());
-
-        return redirect()->route('project.index')->with('success','Project Created Successfully');
+        $validatedData = $request->validated();
+        $project = Project::create($validatedData);
+        $user = User::find($request->user_id);
+        $user->notify(new ProjectAssigned($project));
+        return redirect()->route('project.index')->with('success', 'Project Created Successfully');
     }
 
     /**
@@ -62,7 +57,7 @@ class ProjectController extends Controller
     public function edit(string $id)
     {
         $project = Project::find($id);
-        $clients = Client::where('status',0)->pluck('company_name', 'id');
+        $clients = Client::where('status', 0)->pluck('company_name', 'id');
         $users = User::all()->pluck('name', 'id');
         return view('admin.projects.edit', compact('project', 'clients', 'users'));
     }
@@ -70,20 +65,16 @@ class ProjectController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(EditProjectRequest $request, string $id)
     {
-        $this->validate($request, [
-            'title' => 'required',
-            'description' => 'required',
-            'deadline' => 'required',
-            'client_id' => 'required',
-            'user_id' => 'required',
-            'status' => 'required'
-        ]);
 
         $project = Project::find($id);
-        $project->update($request->all());
-        return redirect()->route('project.index')->with('success','Project Updated Successfully');
+        if ($project->user_id !== $request->user_id) {
+            $user = User::find($request->user_id);
+            $user->notify(new ProjectAssigned($project));
+        }
+        $project->update($request->validated());
+        return redirect()->route('project.index')->with('success', 'Project Updated Successfully');
     }
 
     /**
@@ -92,8 +83,13 @@ class ProjectController extends Controller
     public function destroy(string $id)
     {
         $project = Project::find($id);
-        $project->delete();
-        return redirect()->route('project.index')->with('danger',"Project Deleted Successfully");
 
+        if ($project->task->exists()) {
+            return redirect()->back()->with('danger', 'Cannot delete Project Task exists.');
+        }
+
+        $project->delete();
+
+        return redirect()->back()->with('success', 'Project deleted successfully.');
     }
 }

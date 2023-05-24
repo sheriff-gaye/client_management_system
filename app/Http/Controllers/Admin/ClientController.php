@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateClientRequest;
+use App\Http\Requests\EditClientRequest;
 use App\Models\Client;
-use Illuminate\Http\Request;
+use App\Models\User;
+use App\Notifications\ClientCreate;
+use Illuminate\Support\Facades\Auth;
 
 class ClientController extends Controller
 {
@@ -13,8 +17,8 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients=Client::all();
-        return view('admin.clients.index',compact('clients'));
+        $clients = Client::all();
+        return view('admin.clients.index', compact('clients'));
     }
 
     /**
@@ -28,23 +32,14 @@ class ClientController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateClientRequest $request)
     {
-        $this->validate($request, [
-            'company_name' => 'required|unique:clients,company_name',
-            'email' => 'required|unique:clients,email',
-            'phone' => 'required',
-            'company_address' => 'required',
-            'company_city' => 'required',
-            'company_zip' => 'required',
-            'company_vat' => 'required',
-            'status' => 'required'
-        ]);
+        $validatedDatea = $request->validated();
+        $client =Client::create($validatedDatea);
+        $user=User::find(Auth::user()->id);
+        $user->notify(new ClientCreate($client));
 
-        Client::create($request->all());
-
-        return redirect()->route('client.index')->with('success','Task Created Successfully');
-
+        return redirect()->route('client.index')->with('success', 'Task Created Successfully');
     }
 
     /**
@@ -52,8 +47,8 @@ class ClientController extends Controller
      */
     public function show(string $id)
     {
-        $client=Client::find($id);
-        return view('admin.clients.show',compact('client'));
+        $client = Client::find($id);
+        return view('admin.clients.show', compact('client'));
     }
 
     /**
@@ -61,29 +56,20 @@ class ClientController extends Controller
      */
     public function edit(string $id)
     {
-        $client=Client::find($id);
-        return view('admin.clients.edit',compact('client'));
+        $client = Client::find($id);
+        return view('admin.clients.edit', compact('client'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(EditClientRequest $request, string $id)
     {
-        $this->validate($request, [
-            'company_name' => 'required',
-            'email' => 'required',
-            'phone' => 'required',
-            'company_address' => 'required',
-            'company_city' => 'required',
-            'company_zip' => 'required',
-            'company_vat' => 'required',
-            'status' => 'required'
-        ]);
-
-        $client=Client::find($id);
-        $client->update($request->all());
-        return redirect()->route('client.index')->with('success','Task Updated Successfully');
+        $client = Client::find($id);
+        $client->update($request->validated());
+        $user=User::find(Auth::user()->id);
+        $user->notify(new ClientCreate($client));
+        return redirect()->route('client.index')->with('success', 'Task Updated Successfully');
     }
 
     /**
@@ -91,8 +77,8 @@ class ClientController extends Controller
      */
     public function destroy(string $id)
     {
-        $client=Client::find($id);
+        $client = Client::find($id);
         $client->delete();
-        return redirect()->route('client.index')->with('task','Task Deleted Successfully');
+        return redirect()->route('client.index')->with('task', 'Task Deleted Successfully');
     }
 }
