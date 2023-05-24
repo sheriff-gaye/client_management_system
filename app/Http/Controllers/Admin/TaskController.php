@@ -21,7 +21,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Task::with(['client', 'project', 'user'])->latest()->get();
+        $tasks = Task::with(['client', 'project', 'user'])->latest()->paginate(15);
         return view('admin.task.index', compact('tasks'));
     }
 
