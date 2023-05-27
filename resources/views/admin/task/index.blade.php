@@ -44,8 +44,8 @@
             <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                 @forelse ( $tasks as $task )
                 <tr class="text-gray-700 dark:text-gray-400">
-                    <td class="px-4 py-3 text-sm hover:underline">
-                      <a href="{{route('task.show',$task->id)}}" style="color: blue;">  {{ucfirst($task->title)}}</a>
+                    <td class="px-4 py-3 text-sm hover:underline ">
+                      <a href="{{route('task.show',$task->id)}}">  {{ucfirst($task->title)}}</a>
                     </td>
                     <td class="px-4 py-3 text-sm">
                         {{ucfirst($task->project->title)}}

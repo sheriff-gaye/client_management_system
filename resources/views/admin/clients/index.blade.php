@@ -46,7 +46,7 @@
                 @forelse ( $clients as $client )
                 <tr class="text-gray-700 dark:text-gray-400 ">
                     <td class="px-4 py-3 text-sm hover:underline">
-                        <a href="{{route('client.show',$client->id)}}" style="color: blue;">{{$client->company_name}}</a>
+                        <a href="{{route('client.show',$client->id)}}">{{$client->company_name}}</a>
                     </td>
                     <td class="px-4 py-3 text-sm">
                         {{$client->email}}

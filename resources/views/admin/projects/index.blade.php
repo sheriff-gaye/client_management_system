@@ -46,7 +46,7 @@
                 @forelse ( $projects as $project )
                 <tr class="text-gray-700 dark:text-gray-400">
                     <td class="px-4 py-3 text-sm hover:underline">
-                        <a href="{{route('project.show',$project->id)}}" style="color:blue">{{ucfirst($project->title)}}</a>
+                        <a href="{{route('project.show',$project->id)}}">{{ucfirst($project->title)}}</a>
                     </td>
                     <td class="px-4 py-3 text-sm">
                         {{ucfirst($project->user->name)}}
