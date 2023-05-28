@@ -46,7 +46,7 @@ class TaskController extends Controller
         $task = Task::create($validatedData);
         $user->notify(new TaskAssigned($task));
 
-        return redirect()->route('task.index')->with('success', 'Task Created Successfully');
+        return redirect()->route('crm.task.index')->with('success', 'Task Created Successfully');
     }
 
     /**
@@ -83,7 +83,7 @@ class TaskController extends Controller
         }
         $task->update($request->validated());
 
-        return redirect()->route('task.index')->with('success', 'Task Updated Successfully');
+        return redirect()->route('crm.task.index')->with('success', 'Task Updated Successfully');
     }
 
     /**

@@ -40,7 +40,7 @@ class ProjectController extends Controller
         $project = Project::create($validatedData);
         $user = User::find($request->user_id);
         $user->notify(new ProjectAssigned($project));
-        return redirect()->route('project.index')->with('success', 'Project Created Successfully');
+        return redirect()->route('crm.project.index')->with('success', 'Project Created Successfully');
     }
 
     /**
@@ -75,7 +75,7 @@ class ProjectController extends Controller
             $user->notify(new ProjectAssigned($project));
         }
         $project->update($request->validated());
-        return redirect()->route('project.index')->with('success', 'Project Updated Successfully');
+        return redirect()->back()->with('success', 'Project Updated Successfully');
     }
 
     /**
@@ -91,6 +91,6 @@ class ProjectController extends Controller
         $project->delete();
         
 
-        return redirect()->back()->with('success', 'Project deleted successfully.');
+        return redirect()->route('crm.project.index')->with('success', 'Project deleted successfully.');
     }
 }

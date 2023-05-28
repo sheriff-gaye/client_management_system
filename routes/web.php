@@ -33,13 +33,17 @@ Route::get('/', function () {
 
 Route::get('/logout', [LogoutController::class, 'logout'])->name('go_out');
 
-Route::get('/dash', [DasboardController::class, 'index'])->name('home');
+Route::group(['prefix' => 'crm', 'as' => 'crm.'], function () {
 
-Route::resource('client', ClientController::class);
 
-Route::resource('/project', ProjectController::class);
+    Route::get('/dash', [DasboardController::class, 'index'])->name('home');
 
-Route::resource('/task', TaskController::class);
+    Route::resource('client', ClientController::class);
+
+    Route::resource('/project', ProjectController::class);
+
+    Route::resource('/task', TaskController::class);
+});
 
 
 Route::group(['prefix' => 'notifications', 'as' => 'notifications.'], function () {

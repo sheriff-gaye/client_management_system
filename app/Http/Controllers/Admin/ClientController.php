@@ -39,7 +39,7 @@ class ClientController extends Controller
         $user=User::find(Auth::user()->id);
         $user->notify(new ClientCreate($client));
 
-        return redirect()->route('client.index')->with('success', 'Task Created Successfully');
+        return redirect()->route('crm.client.index')->with('success', 'Task Created Successfully');
     }
 
     /**
@@ -69,7 +69,7 @@ class ClientController extends Controller
         $client->update($request->validated());
         $user=User::find(Auth::user()->id);
         $user->notify(new ClientCreate($client));
-        return redirect()->route('client.index')->with('success', 'Task Updated Successfully');
+        return redirect()->route('crm.client.index')->with('success', 'Task Updated Successfully');
     }
 
     /**
@@ -83,6 +83,6 @@ class ClientController extends Controller
             return redirect()->back()->with('danger', 'Cannot delete client with Associated Projects.');
         }
         $client->delete();
-        return redirect()->route('client.index')->with('success', 'Task Deleted Successfully');
+        return redirect()->route('crm.client.index')->with('success', 'Task Deleted Successfully');
     }
 }

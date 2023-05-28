@@ -6,7 +6,7 @@
     Edit Task
 </h2>
 <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
-    <form action="{{route('task.update',$task->id)}}" method="POST" enctype="multipart/form-data">
+    <form action="{{route('crm.task.update',$task->id)}}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="mt-2">

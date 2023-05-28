@@ -13,13 +13,13 @@ class NotificationController extends Controller
     public function update(Request $request, DatabaseNotification $notification){
         $notification->markAsRead();
 
-        return redirect()->route('home');
+        return redirect()->route('crm.home');
     }
 
 
     public function destroy(){
         auth()->user()->unreadNotifications->markAsRead();
-        return redirect()->route('home');
+        return redirect()->route('crm.home');
 
 
     }

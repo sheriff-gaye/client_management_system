@@ -6,7 +6,7 @@
     Edit Clients Information
 </h2>
 <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
-    <form action="{{route('client.update',$client->id)}}" method="POST" enctype="multipart/form-data">
+    <form action="{{route('crm.client.update',$client->id)}}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="mt-2">
