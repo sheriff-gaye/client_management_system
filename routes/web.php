@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\PositionController;
 use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\RegisteredvotersController;
 use App\Http\Controllers\Admin\TaskController;
+use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\Voting\VotingDashboardController;
 use App\Http\Controllers\Voting\VotingLoginController;
 
@@ -26,10 +27,11 @@ use App\Http\Controllers\Voting\VotingLoginController;
 |
 */
 
-Route::get('/', function () {
+Route::get('/login', function () {
     return view('auth.login');
 });
 
+Route::get('/' ,[FrontendController::class ,'index'])->name('website');
 
 Route::get('/logout', [LogoutController::class, 'logout'])->name('go_out');
 

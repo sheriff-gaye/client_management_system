@@ -75,7 +75,7 @@ class ProjectController extends Controller
             $user->notify(new ProjectAssigned($project));
         }
         $project->update($request->validated());
-        return redirect()->back()->with('success', 'Project Updated Successfully');
+        return redirect()->route('crm.client.index')->with('success', 'Project Updated Successfully');
     }
 
     /**
@@ -91,6 +91,6 @@ class ProjectController extends Controller
         $project->delete();
         
 
-        return redirect()->route('crm.project.index')->with('success', 'Project deleted successfully.');
+        return redirect()->back()->with('success', 'Project deleted successfully.');
     }
 }

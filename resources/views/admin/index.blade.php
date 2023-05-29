@@ -139,8 +139,10 @@
   </div>
 </div>
 
+@auth
 @include('admin.notification.index')
 
+@endauth
 
 
 
