@@ -41,11 +41,11 @@
 </head>
 <body>
     <header class="fixed w-full">
-        <nav class="bg-white border-gray-200 py-2.5 dark:bg-gray-900">
+        <nav class="bg-white border-gray-200 py-2.5 dark:bg-gray-900 shadow-lg">
             <div class="flex flex-wrap items-center justify-between max-w-screen-xl px-4 mx-auto">
                 <a href="#" class="flex items-center">
-                    <img src="{{asset('images/logo.svg')}}" class="h-6 mr-3 sm:h-9" alt="Landwind Logo" />
-                    <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Hub</span>
+                    <!-- <img src="{{asset('images/logo.svg')}}" class="h-6 mr-3 sm:h-9" alt="Landwind Logo" /> -->
+                    <span class="self-center text-xl font-bold whitespace-nowrap dark:text-white">MyClientHub</span>
                 </a>
                 <div class="flex items-center lg:order-2">
                     <!-- <div class="hidden mt-2 mr-4 sm:inline-block">
@@ -170,11 +170,8 @@
             </div>
             <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8">
             <div class="text-center">
-                <a href="#" class="flex items-center justify-center mb-5 text-2xl font-semibold text-gray-900 dark:text-white">
-                    <img src="./images/logo.svg" class="h-6 mr-3 sm:h-9" alt="Landwind Logo" />
-                    Landwind    
-                </a>
-                <span class="block text-sm text-center text-gray-500 dark:text-gray-400">© 2021-2022 Landwind™. All Rights Reserved. Built with <a href="https://flowbite.com" class="text-purple-600 hover:underline dark:text-purple-500">Flowbite</a> and <a href="https://tailwindcss.com" class="text-purple-600 hover:underline dark:text-purple-500">Tailwind CSS</a>. Distributed by <a href="https://themewagon.com/" class="text-purple-600 hover:underline dark:text-purple-500">ThemeWagon</a>
+               
+                <span class="block text-sm text-center text-gray-500 dark:text-gray-400">© 2021-2022 Landwind™. All Rights Reserved.
                 </span>
                 <ul class="flex justify-center mt-5 space-x-5">
                     <li>

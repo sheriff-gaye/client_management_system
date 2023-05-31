@@ -15,7 +15,7 @@
                 <a href="" class="text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 lg:px-5 py-3 lg:py-2.5 sm:mr-2 lg:mr-0 dark:bg-purple-600 dark:hover:bg-purple-700 focus:outline-none dark:focus:ring-purple-800">Get Started</a>
                 </div>
             </div>
-            <div class="hidden lg:mt-0 lg:col-span-5 lg:flex">
+            <div class=" sm:pt-5 lg:mt-0 lg:col-span-5 lg:flex">
                 <img src="./images/top.jpeg" alt="hero image">
             </div>                
         </div>
