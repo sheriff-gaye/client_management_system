@@ -2,7 +2,7 @@
 
 @section('admin_layout')
 <br><br>
-<div class="bg-white shadow-lg rounded-lg p-6 mt-10">
+<div class="bg-white shadow-lg rounded-lg p-6 mt-10 text-gray-700 dark:text-gray-200 dark:bg-gray-800">
     <h2 class=" text-3sm text-purple-700 font-bold mb-4  uppercase text-center">Client Details</h2>
     <hr>
 
