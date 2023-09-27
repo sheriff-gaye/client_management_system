@@ -6,7 +6,7 @@
     Clients Information
 </h2>
 <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
-    <form action="{{route('client.store')}}" method="POST" enctype="multipart/form-data">
+    <form action="{{route('crm.client.store')}}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="mt-2">
             <label class="block text-sm">

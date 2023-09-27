@@ -33,16 +33,28 @@ return [
     |
     */
 
+    // 'mailers' => [
+    //     'smtp' => [
+    //         'transport' => 'smtp',
+    //         'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+    //         'port' => env('MAIL_PORT', 587),
+    //         'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+    //         'username' => env('MAIL_USERNAME'),
+    //         'password' => env('MAIL_PASSWORD'),
+    //         'timeout' => null,
+    //         'local_domain' => env('MAIL_EHLO_DOMAIN'),
+    //     ],
     'mailers' => [
-        'smtp' => [
-            'transport' => 'smtp',
-            'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
-            'port' => env('MAIL_PORT', 587),
+        'smtp'         => [
+            'transport'  => 'smtp',
+            'host'       => env('MAIL_HOST', 'smtp.mailgun.org'),
+            'port'       => env('MAIL_PORT', 587),
             'encryption' => env('MAIL_ENCRYPTION', 'tls'),
-            'username' => env('MAIL_USERNAME'),
-            'password' => env('MAIL_PASSWORD'),
-            'timeout' => null,
-            'local_domain' => env('MAIL_EHLO_DOMAIN'),
+            'username'   => env('MAIL_USERNAME'),
+            'password'   => env('MAIL_PASSWORD'),
+            'timeout'    => null,
+            'auth_mode'  => null,
+            'verify_peer'       => false,   // <------ IT HAS TO BE HERE
         ],
 
         'ses' => [
